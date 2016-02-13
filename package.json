@@ -1,0 +1,39 @@
+{
+  "name": "react-dom-custom",
+  "version": "0.0.0",
+  "description": "Custom DOM renderer.",
+  "main": "lib/index.js",
+  "scripts": {
+    "remove": "rm src/instantiateReactComponent.js && rm src/ReactChildReconciler.js && rm src/ReactDOM.js && rm src/ReactDefaultInjection.js && rm src/ReactMount.js && rm src/ReactMultiChild.js",
+    "download": "wget http://github.com/facebook/react/raw/0.14-stable/src/renderers/shared/reconciler/instantiateReactComponent.js -P src && wget http://github.com/facebook/react/raw/0.14-stable/src/renderers/shared/reconciler/ReactChildReconciler.js -P src && wget http://github.com/facebook/react/raw/0.14-stable/src/renderers/dom/shared/ReactDefaultInjection.js -P src && wget http://github.com/facebook/react/raw/0.14-stable/src/renderers/dom/ReactDOM.js -P src && wget http://github.com/facebook/react/raw/0.14-stable/src/renderers/dom/client/ReactMount.js -P src && wget http://github.com/facebook/react/raw/0.14-stable/src/renderers/shared/reconciler/ReactMultiChild.js -P src",
+    "transform": "./node_modules/jscodeshift/bin/jscodeshift.sh -t transform.js src/instantiateReactComponent.js src/ReactChildReconciler.js src/ReactDOM.js src/ReactDefaultInjection.js src/ReactMount.js src/ReactMultiChild.js ",
+    "build": "npm run remove && npm run download && npm run transform",
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base demo",
+    "deploy": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "jide",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-plugin-dev": "https://github.com/Zenwolf/babel-plugin-dev#a70da693af5c12b2dcf16ed6f1402d32256c22ab",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "exenv": "^1.2.0",
+    "jscodeshift": "^0.3.12",
+    "react": "^0.14.6",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "peerDependencies": {
+    "exenv": "^1.2.0",
+    "react": "^0.14.6"
+  }
+}
